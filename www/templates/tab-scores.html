@@ -1,0 +1,16 @@
+<ion-view view-title="Scores">
+  <ion-content>
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="score in scores" type="item-text-wrap" href="#/tab/scores/{{score.id}}">
+        <img ng-src="{{score.face}}">
+        <h2>{{score.name}}</h2>
+        <p>{{score.lastText}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+
+        <ion-option-button class="button-assertive" ng-click="remove(score)">
+          Delete
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

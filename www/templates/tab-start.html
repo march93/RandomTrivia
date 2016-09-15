@@ -1,0 +1,36 @@
+<ion-view view-title="Dashboard">
+  <ion-content>
+
+    <!--Trivia Section-->
+    <div class="trivia-body">
+
+      <div class="trivia-logo-div" ng-show="!start.started">
+        <img class="trivia-logo" src="img/trivia-logo.png" />
+      </div>
+
+      <h2 class="trivia-title" ng-show="!start.started">Welcome To RandomTrivia</h2>
+
+      <!--Trivia Start Button-->
+      <div class="trivia-start" ng-show="!start.started">
+        <button class="start-button" ng-click="start.start()">Start</button>
+      </div>
+
+      <!--Trivia Questions-->
+      <div class="trivia-main" ng-show="start.started && !start.over">
+        <div class="trivia-question">{{start.question}}</div>
+        <button class="trivia-choice" ng-repeat="choice in start.choices" ng-click="start.check('{{choice}}')" ng-disabled="start.buttonclicked">{{choice}}</button>
+
+        <div ng-show="start.buttonclicked">
+          <span id="correct-answer" ng-show="start.correct">CORRECT</span>
+          <span id="wrong-answer" ng-show="!start.correct">WRONG</span>
+        </div>
+      </div>
+
+      <div class="trivia-restart" ng-show="start.over">
+        <button class="trivia-restart-button" ng-click="start.restart()">START OVER</button>
+      </div>
+
+    </div>
+
+  </ion-content>
+</ion-view>
