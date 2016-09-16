@@ -1,9 +1,15 @@
 <ion-view view-title="Categories">
   <ion-content>
     <ion-list>
-    <ion-toggle  ng-model="settings.enableMovie">
+    <ion-toggle  ng-model="category.enableHistory">
+        Enable History Trivia
+    </ion-toggle>
+    <ion-toggle  ng-model="category.enableMovie">
         Enable Movie Trivia
     </ion-toggle>
     </ion-list>
+
+    <span ng-show="category.enableHistory">HISTORY ENABLED</span>
+    <span ng-show="category.enableMovie">MOVIE ENABLED</span>
   </ion-content>
 </ion-view>

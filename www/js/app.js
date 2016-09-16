@@ -74,7 +74,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     views: {
       'tab-categories': {
         templateUrl: 'templates/tab-categories.html',
-        controller: 'CategoriesCtrl'
+        controller: 'CategoriesCtrl as category'
       }
     }
   });

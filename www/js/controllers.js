@@ -21,7 +21,7 @@ angular.module('starter.controllers', [])
 
   // get current question
   this.current = function() {
-    var cur = TriviaService.getCurrent(startctrl.qnum);
+    var cur = TriviaService.getHistory(startctrl.qnum);
 
     if (cur != false) {
       startctrl.question = cur.question;
@@ -43,7 +43,7 @@ angular.module('starter.controllers', [])
       $timeout(function () {
         startctrl.buttonclicked = false;
         startctrl.next();
-      }, 2000); 
+      }, 1000); 
 
     } else {
       // display WRONG
@@ -66,7 +66,9 @@ angular.module('starter.controllers', [])
 
   // restart trivia
   this.restart = function() {
-    startctrl.start();
+    startctrl.started = false;
+    startctrl.over = false;
+    //startctrl.start();
   }
 }])
 
@@ -89,8 +91,9 @@ angular.module('starter.controllers', [])
   $scope.score = ScoresService.get($stateParams.scoreId);
 })
 
-.controller('CategoriesCtrl', function($scope) {
-  $scope.settings = {
-    enableMovie: true
-  };
+.controller('CategoriesCtrl', function() {
+  var catctrl = this;
+  catctrl.enableHistory = true;
+  catctrl.enableMovie = false;
+
 });

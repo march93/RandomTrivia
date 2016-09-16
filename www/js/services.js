@@ -30,10 +30,45 @@ angular.module('starter.services', [])
     }
   ];
 
+  var movie = [
+    {
+      question: "Who is the most nominated actor in Academy history?",
+      choices: ["Jack Nicholson", "Laurence Olivier", "Spencer Tracy", "Paul Newman"],
+      answer: "Jack Nicholson"
+    },
+    {
+      question: "Which of the following four individuals has not won an Oscar?",
+      choices: ["Robert Duvall", "Eminem", "Cuba Gooding, Jr.", "Mickey Rourke"],
+      answer: "Mickey Rourke"
+    },
+    {
+      question: "Who was the first director to win the Best Director Oscar for a film in which he was also nominated as Best Actor?",
+      choices: ["Woody Allen", "Warren Beatty", "Kevin Costner", "Clint Eastwood"],
+      answer: "Woody Allen"
+    },
+    {
+      question: "Which of the following film series franchises has had more than one of its films win the Best Picture Oscar?",
+      choices: ["James Bond", "The Godfather", "The Lord of the Rings", "Star Wars"],
+      answer: "The Godfather"
+    },
+    {
+      question: "Which film had the tagline: 'Heaven and Earth are About to Collide'?",
+      choices: ["Armageddon (1998)", "The Day After Tomorrow (2004)", "Deep Impact (1998)", "When Worlds Collide (1951)"],
+      answer: "Deep Impact (1998)"
+    }
+  ]
+
   return {
-    getCurrent: function(qnum) {
-      if(qnum < history.length) {
+    getHistory: function(qnum) {
+      if (qnum < history.length) {
         return history[qnum];
+      } else {
+        return false;
+      }
+    },
+    getMovie: function(qnum) {
+      if (qnum < movie.length) {
+        return movie[qnum];
       } else {
         return false;
       }
