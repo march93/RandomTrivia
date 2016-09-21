@@ -1,99 +1,133 @@
 angular.module('starter.controllers', [])
 
-.controller('StartCtrl', ['TriviaService', 'ScoresService', '$timeout', function(TriviaService, ScoresSerivce, $timeout) {
-  var startctrl = this;
+    .controller('StartCtrl', ['TriviaService', 'ScoresService', 'CategoryService', '$timeout', '$document', function (TriviaService, ScoresService, CategoryService, $timeout, $document) {
+        var startctrl = this;
 
-  // set initial variables
-  startctrl.qnum = 0;
-  startctrl.started = false;
-  startctrl.over = false;
-  startctrl.question = "";
-  startctrl.choices = [];
-  startctrl.answer = "";
+        // set initial variables
+        startctrl.qnum = 0;
+        startctrl.started = false;
+        startctrl.over = false;
+        startctrl.question = "";
+        startctrl.choices = [];
+        startctrl.answer = "";
+        startctrl.options = null;
 
-  // start button
-  this.start = function() {
-    startctrl.qnum = 0;
-    startctrl.started = true;
-    startctrl.over = false;
-    startctrl.current();
-  };
+        var initialize = function () {
+            CategoryService.getOptions().then(
+                function (result) {
+                    startctrl.options = result;
+                }
+            )
+        };
+        (function () {
+            $document.ready(function () {
+                initialize();
+            })
+        })();
 
-  // get current question
-  this.current = function() {
-    var cur = TriviaService.getHistory(startctrl.qnum);
+        // start button
+        startctrl.start = function () {
+            startctrl.qnum = 0;
+            startctrl.started = true;
+            startctrl.over = false;
+            startctrl.current();
+        };
 
-    if (cur != false) {
-      startctrl.question = cur.question;
-      startctrl.choices = cur.choices;
-      startctrl.answer = cur.answer;
-    } else {
-      startctrl.over = true;
-    }
-  };
+        // get current question
+        startctrl.current = function () {
+            var cur = TriviaService.getHistory(startctrl.qnum);
 
-  // check answer
-  this.check = function(clicked) {
-    if (clicked == startctrl.answer) {
-      // display CORRECT
-      startctrl.correct = true;
-      startctrl.buttonclicked = true;
+            if (cur != false) {
+                startctrl.question = cur.question;
+                startctrl.choices = cur.choices;
+                startctrl.answer = cur.answer;
+            } else {
+                startctrl.over = true;
+            }
+        };
 
-      // get next question and hide CORRECT
-      $timeout(function () {
-        startctrl.buttonclicked = false;
-        startctrl.next();
-      }, 1000); 
+        // check answer
+        startctrl.check = function (clicked) {
+            if (clicked == startctrl.answer) {
+                // display CORRECT
+                startctrl.correct = true;
+                startctrl.buttonclicked = true;
 
-    } else {
-      // display WRONG
-      startctrl.correct = false;
-      startctrl.buttonclicked = true;
+                // get next question and hide CORRECT
+                $timeout(function () {
+                    startctrl.buttonclicked = false;
+                    startctrl.next();
+                }, 1000);
 
-      // get next question and hide WRONG
-      $timeout(function () {
-        startctrl.buttonclicked = false;
-        startctrl.next();
-      }, 2000); 
-    }
-  };
+            } else {
+                // display WRONG
+                startctrl.correct = false;
+                startctrl.buttonclicked = true;
 
-  // next question
-  this.next = function() {
-    startctrl.qnum++;
-    startctrl.current();
-  };
+                // get next question and hide WRONG
+                $timeout(function () {
+                    startctrl.buttonclicked = false;
+                    startctrl.next();
+                }, 1000);
+            }
+        };
 
-  // restart trivia
-  this.restart = function() {
-    startctrl.started = false;
-    startctrl.over = false;
-    //startctrl.start();
-  }
-}])
+        // next question
+        startctrl.next = function () {
+            startctrl.qnum++;
+            startctrl.current();
+        };
 
-.controller('ScoresCtrl', function($scope, ScoresService) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+        // restart trivia
+        startctrl.restart = function () {
+            startctrl.started = false;
+            startctrl.over = false;
+        }
+    }])
 
-  $scope.scores = ScoresService.all();
-  $scope.remove = function(score) {
-    ScoresService.remove(score);
-  };
-})
+    .controller('CategoriesCtrl', ['CategoryService', '$document', function (CategoryService, $document) {
+        var catctrl = this;
+        catctrl.enableHistory = null;
+        catctrl.enableMovie = null;
 
-.controller('ScoreDetailCtrl', function($scope, $stateParams, ScoresService) {
-  $scope.score = ScoresService.get($stateParams.scoreId);
-})
+        catctrl.onChange = function () {
+            console.log(catctrl.enableHistory);
+            CategoryService.saveOptions({
+                history: catctrl.enableHistory,
+                movie: catctrl.enableMovie
+            });
+        }
 
-.controller('CategoriesCtrl', function() {
-  var catctrl = this;
-  catctrl.enableHistory = true;
-  catctrl.enableMovie = false;
+        var initialize = function () {
+            CategoryService.getOptions().then(
+                function (result) {
+                    catctrl.enableHistory = result.history;
+                    catctrl.enableMovie = result.movie;
+                }
+            )
+        };
+        (function () {
+            $document.ready(function () {
+                initialize();
+            })
+        })();
+    }])
 
-});
+    .controller('ScoresCtrl', function ($scope, ScoresService) {
+        // With the new view caching in Ionic, Controllers are only called
+        // when they are recreated or on app start, instead of every page change.
+        // To listen for when this page is active (for example, to refresh data),
+        // listen for the $ionicView.enter event:
+        //
+        //$scope.$on('$ionicView.enter', function(e) {
+        //});
+
+        $scope.scores = ScoresService.all();
+        $scope.remove = function (score) {
+            ScoresService.remove(score);
+        };
+    })
+
+    .controller('ScoreDetailCtrl', function ($scope, $stateParams, ScoresService) {
+        $scope.score = ScoresService.get($stateParams.scoreId);
+    });
