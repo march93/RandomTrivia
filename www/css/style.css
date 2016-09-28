@@ -7,14 +7,12 @@
 
 .trivia-logo {
     position: relative;
-    top: 80px;
+    top: 50px;
     width: 70%;
     margin: 20px;
 }
 
 .trivia-title {
-    position: relative;
-    top: 30px;
     width: 90%;
     margin: 0 auto;
     color: white; 
@@ -23,8 +21,6 @@
 }
 
 .trivia-start {
-    position: relative;
-    top: 30px;
     text-align: center;
 }
 
@@ -41,19 +37,37 @@
     text-align: center;
 }
 
+.trivia-question-number {
+    width: 8%;
+    border: solid white;
+    border-radius: 30px;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
 .trivia-question {
-    width: 90%;
+    width: 85%;
+    border: solid white;
+    border-radius: 15px;
     margin: 10px auto;
+    margin-bottom: 30px;
     padding: 5px;
     text-align: center;
-    font-size: 18px;
+    font-size: 20px;
+    color: white;
 }
 
 .trivia-choice {
     background-color: #74FCFC;
-    width: 90%;
+    width: 85%;
+    border-radius: 15px;
     padding: 10px;
     margin: 5px 0;
+    color: #1C1C1C;
+    font-size: 15px;
 }
 
 .trivia-restart {

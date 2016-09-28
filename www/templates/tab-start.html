@@ -17,7 +17,8 @@
 
             <!--Trivia Questions-->
             <div class="trivia-main" ng-show="start.started && !start.over">
-                <div class="trivia-question">{{start.question}}</div>
+                <div class="trivia-question-number">{{ start.qnum + 1 }}</div>
+                <div class="trivia-question">{{ start.question }}</div>
                 <button class="trivia-choice" ng-repeat="choice in start.choices" ng-click="start.check('{{choice}}')" ng-disabled="start.buttonclicked">{{choice}}</button>
 
                 <div ng-show="start.buttonclicked">
@@ -29,8 +30,6 @@
             <div class="trivia-restart" ng-show="start.over">
                 <button class="trivia-restart-button" ng-click="start.restart()">START OVER</button>
             </div>
-
-            {{start.options.history}}
 
         </div>
 
